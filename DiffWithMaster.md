@@ -8,3 +8,6 @@
 4、gdb 添加 Exist 查询支持
 
 5、gdb 支持根据数据库字段类型转换日期和时间字符串
+
+6、gdb 增加NewCounter函数
+
