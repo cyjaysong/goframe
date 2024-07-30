@@ -11,3 +11,4 @@
 
 6、gdb 增加NewCounter函数
 
+7、gdb Rollback()执行前判断事务是否已经关闭
