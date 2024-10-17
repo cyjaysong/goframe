@@ -8,3 +8,5 @@
 - 4、gdb 添加 Exist 查询支持
 
 - 5、gdb 增加NewCounter函数
+
+- 6、gdb 事务Rollback时判断事务是否已关闭
