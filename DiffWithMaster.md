@@ -6,3 +6,5 @@
 - 3、grpool 添加 WithParams 特性支持
 
 - 4、gdb 添加 Exist 查询支持
+
+- 5、gdb 增加NewCounter函数
