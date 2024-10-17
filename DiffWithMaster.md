@@ -10,3 +10,7 @@
 - 5、gdb 增加NewCounter函数
 
 - 6、gdb 事务Rollback时判断事务是否已关闭
+
+- 7、Redis 脚本封装: 
+  - 减少numKeys的传递，根据调用调用函数时传递keys自主判断。
+  - Run函数运行脚本时，使用EVALSHA运行脚本，如果脚本不存在，则使用EVAL重试并尝试缓存脚本，以提升运行效率
