@@ -8,7 +8,6 @@ package pgsql
 
 import (
 	"fmt"
-
 	"github.com/gogf/gf/v2/database/gdb"
 	"github.com/gogf/gf/v2/errors/gcode"
 	"github.com/gogf/gf/v2/errors/gerror"
@@ -39,6 +38,30 @@ func (d *Driver) FormatUpsert(columns []string, list gdb.List, option gdb.DoInse
 					"%s=%s",
 					d.Core.QuoteWord(k),
 					v,
+				)
+			case gdb.Counter:
+				operator, columnVal := "+", v.(gdb.Counter).Value
+				if columnVal < 0 {
+					operator, columnVal = "-", -columnVal
+				}
+				onDuplicateStr += fmt.Sprintf(
+					"%s=EXCLUDED.%s%s%s",
+					d.QuoteWord(k),
+					d.QuoteWord(v.(gdb.Counter).Field),
+					operator,
+					gconv.String(columnVal),
+				)
+			case *gdb.Counter:
+				operator, columnVal := "+", v.(*gdb.Counter).Value
+				if columnVal < 0 {
+					operator, columnVal = "-", -columnVal
+				}
+				onDuplicateStr += fmt.Sprintf(
+					"%s=EXCLUDED.%s%s%s",
+					d.QuoteWord(k),
+					d.QuoteWord(v.(*gdb.Counter).Field),
+					operator,
+					gconv.String(columnVal),
 				)
 			default:
 				onDuplicateStr += fmt.Sprintf(
