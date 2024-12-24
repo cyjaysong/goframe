@@ -40,6 +40,31 @@ func (d *Driver) FormatUpsert(columns []string, list gdb.List, option gdb.DoInse
 					d.Core.QuoteWord(k),
 					v,
 				)
+
+			case gdb.Counter:
+				operator, columnVal := "+", v.(gdb.Counter).Value
+				if columnVal < 0 {
+					operator, columnVal = "-", -columnVal
+				}
+				onDuplicateStr += fmt.Sprintf(
+					"%s=EXCLUDED.%s%s%s",
+					d.QuoteWord(k),
+					d.QuoteWord(v.(gdb.Counter).Field),
+					operator,
+					gconv.String(columnVal),
+				)
+			case *gdb.Counter:
+				operator, columnVal := "+", v.(*gdb.Counter).Value
+				if columnVal < 0 {
+					operator, columnVal = "-", -columnVal
+				}
+				onDuplicateStr += fmt.Sprintf(
+					"%s=EXCLUDED.%s%s%s",
+					d.QuoteWord(k),
+					d.QuoteWord(v.(*gdb.Counter).Field),
+					operator,
+					gconv.String(columnVal),
+				)
 			default:
 				onDuplicateStr += fmt.Sprintf(
 					"%s=EXCLUDED.%s",

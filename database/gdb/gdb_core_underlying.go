@@ -388,6 +388,30 @@ func (c *Core) FormatUpsert(columns []string, list List, option DoInsertOption) 
 					c.QuoteWord(k),
 					v,
 				)
+			case Counter:
+				operator, columnVal := "+", v.(Counter).Value
+				if columnVal < 0 {
+					operator, columnVal = "-", -columnVal
+				}
+				onDuplicateStr += fmt.Sprintf(
+					"%s=%s%s%s",
+					c.QuoteWord(k),
+					c.QuoteWord(v.(Counter).Field),
+					operator,
+					gconv.String(columnVal),
+				)
+			case *Counter:
+				operator, columnVal := "+", v.(*Counter).Value
+				if columnVal < 0 {
+					operator, columnVal = "-", -columnVal
+				}
+				onDuplicateStr += fmt.Sprintf(
+					"%s=%s%s%s",
+					c.QuoteWord(k),
+					c.QuoteWord(v.(*Counter).Field),
+					operator,
+					gconv.String(columnVal),
+				)
 			default:
 				onDuplicateStr += fmt.Sprintf(
 					"%s=VALUES(%s)",
