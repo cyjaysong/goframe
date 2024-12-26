@@ -12,7 +12,6 @@ package gdb
 import (
 	"context"
 	"database/sql"
-	"github.com/gogf/gf/v2/util/gconv"
 	"time"
 
 	"github.com/gogf/gf/v2/container/garray"
@@ -25,6 +24,7 @@ import (
 	"github.com/gogf/gf/v2/os/gcmd"
 	"github.com/gogf/gf/v2/os/gctx"
 	"github.com/gogf/gf/v2/os/glog"
+	"github.com/gogf/gf/v2/util/gconv"
 	"github.com/gogf/gf/v2/util/grand"
 	"github.com/gogf/gf/v2/util/gutil"
 )

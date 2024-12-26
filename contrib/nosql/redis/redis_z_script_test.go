@@ -7,9 +7,11 @@
 package redis_test
 
 import (
-	redis2 "github.com/gogf/gf/contrib/nosql/redis/v2"
-	"github.com/gogf/gf/v2/test/gtest"
 	"testing"
+
+	"github.com/gogf/gf/v2/test/gtest"
+
+	redis2 "github.com/gogf/gf/contrib/nosql/redis/v2"
 )
 
 func Test_Script_Eval(t *testing.T) {

@@ -4,11 +4,12 @@ import (
 	"context"
 	"crypto/sha1"
 	"encoding/hex"
+	"io"
+	"strings"
+
 	"github.com/gogf/gf/v2/container/gvar"
 	"github.com/gogf/gf/v2/database/gredis"
 	"github.com/gogf/gf/v2/os/gmlock"
-	"io"
-	"strings"
 )
 
 var cacheScriptLock = gmlock.New()
