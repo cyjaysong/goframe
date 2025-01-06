@@ -24,10 +24,15 @@ func Interfaces(any interface{}) []interface{} {
 	if any == nil {
 		return nil
 	}
-	var array []interface{}
+	var array []interface{} = nil
 	switch value := any.(type) {
 	case []interface{}:
 		array = value
+	case [][]byte:
+		array = make([]interface{}, len(value))
+		for k, v := range value {
+			array[k] = v
+		}
 	case []string:
 		array = make([]interface{}, len(value))
 		for k, v := range value {
@@ -63,7 +68,7 @@ func Interfaces(any interface{}) []interface{} {
 		for k, v := range value {
 			array[k] = v
 		}
-	case []uint8:
+	case []uint8: // []byte
 		if json.Valid(value) {
 			_ = json.UnmarshalUseNumber(value, &array)
 		} else {
@@ -78,8 +83,9 @@ func Interfaces(any interface{}) []interface{} {
 			array[k] = v
 		}
 	case []uint32:
-		for _, v := range value {
-			array = append(array, v)
+		array = make([]interface{}, len(value))
+		for k, v := range value {
+			array[k] = v
 		}
 	case []uint64:
 		array = make([]interface{}, len(value))

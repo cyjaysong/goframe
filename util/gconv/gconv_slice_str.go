@@ -28,6 +28,18 @@ func Strings(any interface{}) []string {
 		array []string = nil
 	)
 	switch value := any.(type) {
+	case []interface{}:
+		array = make([]string, len(value))
+		for k, v := range value {
+			array[k] = String(v)
+		}
+	case [][]byte:
+		array = make([]string, len(value))
+		for k, v := range value {
+			array[k] = String(v)
+		}
+	case []string:
+		array = value
 	case []int:
 		array = make([]string, len(value))
 		for k, v := range value {
@@ -58,7 +70,7 @@ func Strings(any interface{}) []string {
 		for k, v := range value {
 			array[k] = String(v)
 		}
-	case []uint8:
+	case []uint8: // []byte
 		if json.Valid(value) {
 			_ = json.UnmarshalUseNumber(value, &array)
 		}
@@ -68,19 +80,6 @@ func Strings(any interface{}) []string {
 				array[k] = String(v)
 			}
 			return array
-		}
-	case string:
-		byteValue := []byte(value)
-		if json.Valid(byteValue) {
-			_ = json.UnmarshalUseNumber(byteValue, &array)
-		}
-		if array == nil {
-			if value == "" {
-				return []string{}
-			}
-			// Prevent strings from being null
-			// See Issue 3465 for details
-			return []string{value}
 		}
 	case []uint16:
 		array = make([]string, len(value))
@@ -108,18 +107,6 @@ func Strings(any interface{}) []string {
 			array[k] = String(v)
 		}
 	case []float64:
-		array = make([]string, len(value))
-		for k, v := range value {
-			array[k] = String(v)
-		}
-	case []interface{}:
-		array = make([]string, len(value))
-		for k, v := range value {
-			array[k] = String(v)
-		}
-	case []string:
-		array = value
-	case [][]byte:
 		array = make([]string, len(value))
 		for k, v := range value {
 			array[k] = String(v)

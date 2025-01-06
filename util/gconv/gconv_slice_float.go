@@ -16,7 +16,7 @@ import (
 
 // SliceFloat is alias of Floats.
 func SliceFloat(any interface{}) []float64 {
-	return Floats(any)
+	return Float64s(any)
 }
 
 // SliceFloat32 is alias of Float32s.
@@ -26,7 +26,7 @@ func SliceFloat32(any interface{}) []float32 {
 
 // SliceFloat64 is alias of Float64s.
 func SliceFloat64(any interface{}) []float64 {
-	return Floats(any)
+	return Float64s(any)
 }
 
 // Floats converts `any` to []float64.
@@ -43,11 +43,16 @@ func Float32s(any interface{}) []float32 {
 		array []float32 = nil
 	)
 	switch value := any.(type) {
-	case string:
-		if value == "" {
-			return []float32{}
+	case []interface{}:
+		array = make([]float32, len(value))
+		for k, v := range value {
+			array[k] = Float32(v)
 		}
-		return []float32{Float32(value)}
+	case [][]byte:
+		array = make([]float32, len(value))
+		for k, v := range value {
+			array[k] = Float32(v)
+		}
 	case []string:
 		array = make([]float32, len(value))
 		for k, v := range value {
@@ -82,7 +87,7 @@ func Float32s(any interface{}) []float32 {
 		for _, v := range value {
 			array = append(array, Float32(v))
 		}
-	case []uint8:
+	case []uint8: // []byte
 		if json.Valid(value) {
 			_ = json.UnmarshalUseNumber(value, &array)
 		} else {
@@ -109,16 +114,13 @@ func Float32s(any interface{}) []float32 {
 	case []bool:
 		array = make([]float32, len(value))
 		for k, v := range value {
-			array[k] = Float32(v)
+			if array[k] = 0; v {
+				array[k] = 1
+			}
 		}
 	case []float32:
 		array = value
 	case []float64:
-		array = make([]float32, len(value))
-		for k, v := range value {
-			array[k] = Float32(v)
-		}
-	case []interface{}:
 		array = make([]float32, len(value))
 		for k, v := range value {
 			array[k] = Float32(v)
@@ -167,11 +169,16 @@ func Float64s(any interface{}) []float64 {
 		array []float64 = nil
 	)
 	switch value := any.(type) {
-	case string:
-		if value == "" {
-			return []float64{}
+	case []interface{}:
+		array = make([]float64, len(value))
+		for k, v := range value {
+			array[k] = Float64(v)
 		}
-		return []float64{Float64(value)}
+	case [][]byte:
+		array = make([]float64, len(value))
+		for k, v := range value {
+			array[k] = Float64(v)
+		}
 	case []string:
 		array = make([]float64, len(value))
 		for k, v := range value {
@@ -206,7 +213,7 @@ func Float64s(any interface{}) []float64 {
 		for _, v := range value {
 			array = append(array, Float64(v))
 		}
-	case []uint8:
+	case []uint8: // []byte
 		if json.Valid(value) {
 			_ = json.UnmarshalUseNumber(value, &array)
 		} else {
@@ -233,7 +240,9 @@ func Float64s(any interface{}) []float64 {
 	case []bool:
 		array = make([]float64, len(value))
 		for k, v := range value {
-			array[k] = Float64(v)
+			if array[k] = 0; v {
+				array[k] = 1
+			}
 		}
 	case []float32:
 		array = make([]float64, len(value))
@@ -242,11 +251,6 @@ func Float64s(any interface{}) []float64 {
 		}
 	case []float64:
 		array = value
-	case []interface{}:
-		array = make([]float64, len(value))
-		for k, v := range value {
-			array[k] = Float64(v)
-		}
 	}
 	if array != nil {
 		return array
@@ -255,7 +259,7 @@ func Float64s(any interface{}) []float64 {
 		return v.Floats()
 	}
 	if v, ok := any.(localinterface.IInterfaces); ok {
-		return Floats(v.Interfaces())
+		return Float64s(v.Interfaces())
 	}
 	// JSON format string value converting.
 	if checkJsonAndUnmarshalUseNumber(any, &array) {

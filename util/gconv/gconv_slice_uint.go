@@ -7,13 +7,10 @@
 package gconv
 
 import (
-	"reflect"
-	"strings"
-
 	"github.com/gogf/gf/v2/internal/json"
 	"github.com/gogf/gf/v2/internal/reflection"
-	"github.com/gogf/gf/v2/internal/utils"
 	"github.com/gogf/gf/v2/util/gconv/internal/localinterface"
+	"reflect"
 )
 
 // SliceUint is alias of Uints.
@@ -41,19 +38,25 @@ func Uints(any interface{}) []uint {
 		array []uint = nil
 	)
 	switch value := any.(type) {
-	case string:
-		value = strings.TrimSpace(value)
-		if value == "" {
-			return []uint{}
+	case []interface{}:
+		array = make([]uint, len(value))
+		for k, v := range value {
+			array[k] = Uint(v)
 		}
-		if utils.IsNumeric(value) {
-			return []uint{Uint(value)}
+	case [][]byte:
+		array = make([]uint, len(value))
+		for k, v := range value {
+			array[k] = Uint(v)
 		}
-
 	case []string:
 		array = make([]uint, len(value))
 		for k, v := range value {
 			array[k] = Uint(v)
+		}
+	case []int:
+		array = make([]uint, len(value))
+		for k, v := range value {
+			array[k] = uint(v)
 		}
 	case []int8:
 		array = make([]uint, len(value))
@@ -77,7 +80,7 @@ func Uints(any interface{}) []uint {
 		}
 	case []uint:
 		array = value
-	case []uint8:
+	case []uint8: // []byte
 		if json.Valid(value) {
 			_ = json.UnmarshalUseNumber(value, &array)
 		} else {
@@ -104,10 +107,8 @@ func Uints(any interface{}) []uint {
 	case []bool:
 		array = make([]uint, len(value))
 		for k, v := range value {
-			if v {
+			if array[k] = 0; v {
 				array[k] = 1
-			} else {
-				array[k] = 0
 			}
 		}
 	case []float32:
@@ -116,16 +117,6 @@ func Uints(any interface{}) []uint {
 			array[k] = Uint(v)
 		}
 	case []float64:
-		array = make([]uint, len(value))
-		for k, v := range value {
-			array[k] = Uint(v)
-		}
-	case []interface{}:
-		array = make([]uint, len(value))
-		for k, v := range value {
-			array[k] = Uint(v)
-		}
-	case [][]byte:
 		array = make([]uint, len(value))
 		for k, v := range value {
 			array[k] = Uint(v)
@@ -177,18 +168,20 @@ func Uint32s(any interface{}) []uint32 {
 		array []uint32 = nil
 	)
 	switch value := any.(type) {
-	case string:
-		value = strings.TrimSpace(value)
-		if value == "" {
-			return []uint32{}
-		}
-		if utils.IsNumeric(value) {
-			return []uint32{Uint32(value)}
+	case []interface{}:
+		array = make([]uint32, len(value))
+		for k, v := range value {
+			array[k] = Uint32(v)
 		}
 	case []string:
 		array = make([]uint32, len(value))
 		for k, v := range value {
 			array[k] = Uint32(v)
+		}
+	case []int:
+		array = make([]uint32, len(value))
+		for k, v := range value {
+			array[k] = uint32(v)
 		}
 	case []int8:
 		array = make([]uint32, len(value))
@@ -215,7 +208,7 @@ func Uint32s(any interface{}) []uint32 {
 		for k, v := range value {
 			array[k] = uint32(v)
 		}
-	case []uint8:
+	case []uint8: // []byte
 		if json.Valid(value) {
 			_ = json.UnmarshalUseNumber(value, &array)
 		} else {
@@ -239,10 +232,8 @@ func Uint32s(any interface{}) []uint32 {
 	case []bool:
 		array = make([]uint32, len(value))
 		for k, v := range value {
-			if v {
+			if array[k] = 0; v {
 				array[k] = 1
-			} else {
-				array[k] = 0
 			}
 		}
 	case []float32:
@@ -251,16 +242,6 @@ func Uint32s(any interface{}) []uint32 {
 			array[k] = Uint32(v)
 		}
 	case []float64:
-		array = make([]uint32, len(value))
-		for k, v := range value {
-			array[k] = Uint32(v)
-		}
-	case []interface{}:
-		array = make([]uint32, len(value))
-		for k, v := range value {
-			array[k] = Uint32(v)
-		}
-	case [][]byte:
 		array = make([]uint32, len(value))
 		for k, v := range value {
 			array[k] = Uint32(v)
@@ -311,19 +292,25 @@ func Uint64s(any interface{}) []uint64 {
 		array []uint64 = nil
 	)
 	switch value := any.(type) {
-	case string:
-		value = strings.TrimSpace(value)
-		if value == "" {
-			return []uint64{}
+	case []interface{}:
+		array = make([]uint64, len(value))
+		for k, v := range value {
+			array[k] = Uint64(v)
 		}
-		if utils.IsNumeric(value) {
-			return []uint64{Uint64(value)}
+	case [][]byte:
+		array = make([]uint64, len(value))
+		for k, v := range value {
+			array[k] = Uint64(v)
 		}
-
 	case []string:
 		array = make([]uint64, len(value))
 		for k, v := range value {
 			array[k] = Uint64(v)
+		}
+	case []int:
+		array = make([]uint64, len(value))
+		for k, v := range value {
+			array[k] = uint64(v)
 		}
 	case []int8:
 		array = make([]uint64, len(value))
@@ -350,7 +337,7 @@ func Uint64s(any interface{}) []uint64 {
 		for k, v := range value {
 			array[k] = uint64(v)
 		}
-	case []uint8:
+	case []uint8: // []byte
 		if json.Valid(value) {
 			_ = json.UnmarshalUseNumber(value, &array)
 		} else {
@@ -374,10 +361,8 @@ func Uint64s(any interface{}) []uint64 {
 	case []bool:
 		array = make([]uint64, len(value))
 		for k, v := range value {
-			if v {
+			if array[k] = 0; v {
 				array[k] = 1
-			} else {
-				array[k] = 0
 			}
 		}
 	case []float32:
@@ -386,16 +371,6 @@ func Uint64s(any interface{}) []uint64 {
 			array[k] = Uint64(v)
 		}
 	case []float64:
-		array = make([]uint64, len(value))
-		for k, v := range value {
-			array[k] = Uint64(v)
-		}
-	case []interface{}:
-		array = make([]uint64, len(value))
-		for k, v := range value {
-			array[k] = Uint64(v)
-		}
-	case [][]byte:
 		array = make([]uint64, len(value))
 		for k, v := range value {
 			array[k] = Uint64(v)

@@ -305,7 +305,6 @@ func Test_Issue2395(t *testing.T) {
 		type Test struct {
 			Num int
 		}
-		var ()
 		obj := Test{Num: 0}
 		t.Assert(gconv.Interfaces(obj), []interface{}{obj})
 	})
