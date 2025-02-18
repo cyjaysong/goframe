@@ -4,3 +4,5 @@
 - 2、gdb 增加NewCounter函数
 
 - 3、gdb 事务Rollback时判断事务是否已关闭
+
+- 4、gtime.Format 废弃标注，gtime.Format与标准库`time.Time`的 Format 方法冲突容易造成生产事故
