@@ -18,3 +18,5 @@
 - 8、gtime 添加时间字符串魔法函数
 
 - 9、gtime.Format 废弃标注，gtime.Format与标准库`time.Time`的 Format 方法冲突容易造成生产事故
+
+- 10、Redis 添加 GetConfig()
