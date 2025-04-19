@@ -2,3 +2,5 @@
 - 1、Model 默认不执行Safe函数，保证链式调用不重复构建新的Model指针对象
 
 - 2、gdb 增加NewCounter函数
+
+- 3、gdb 事务Rollback时判断事务是否已关闭
