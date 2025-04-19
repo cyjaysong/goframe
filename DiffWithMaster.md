@@ -6,3 +6,5 @@
 - 3、grpool 添加 WithParams 特性支持
 
 - 4、gdb 增加NewCounter函数
+
+- 5、gdb 事务Rollback时判断事务是否已关闭
